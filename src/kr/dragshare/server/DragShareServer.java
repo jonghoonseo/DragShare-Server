@@ -1,12 +1,11 @@
 /**
  * 
  */
-package kr.dragshare;
+package kr.dragshare.server;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
-import java.util.Date;
 import java.util.Properties;
 
 import com.illposed.osc.OSCListener;
@@ -17,7 +16,7 @@ import com.illposed.osc.OSCPortIn;
  * @author Jonghoon_Seo
  *
  */
-public class DragShareServer implements OSCListener {
+public class DragShareServer {
 	OSCPortIn server;
 	
 	int port;
@@ -34,13 +33,8 @@ public class DragShareServer implements OSCListener {
 	private void initializeServer() throws SocketException {
 		server = new OSCPortIn(port);
 		
-		OSCListener listener = new OSCListener() {
-			public void acceptMessage(java.util.Date time, OSCMessage message) {
-				System.out.println("Message received!");
-			}
-		};
-		
-		server.addListener("/dragshare/*", listener);
+		server.addListener("/dragshare/sender", new SenderPacketListener());
+		server.addListener("/dragshare/receiver", new SenderPacketListener());
 		server.startListening();
 	}
 
@@ -76,12 +70,4 @@ public class DragShareServer implements OSCListener {
 			e.printStackTrace();
 		}
 	}
-
-
-	@Override
-	public void acceptMessage(Date time, OSCMessage message) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
