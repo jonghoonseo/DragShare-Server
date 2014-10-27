@@ -21,20 +21,29 @@ public class DragShareServer {
 	
 	int port;
 	
+	FakeDB db;
+	
 	// Constructor
 	//--------------------------------
 	public DragShareServer() throws IOException {
+		db = new FakeDB();
+		
 		getServerConfiguration();
 		
 		initializeServer();
+	}
+	
+	public void finalize() {
+		System.out.println("서버 종료");
 	}
 
 
 	private void initializeServer() throws SocketException {
 		server = new OSCPortIn(port);
 		
-		server.addListener("/dragshare/sender", new SenderPacketListener());
-		server.addListener("/dragshare/receiver", new SenderPacketListener());
+		server.addListener("/dragshare/sender", new SenderPacketListener(this));
+		server.addListener("/dragshare/receiver", new ReceiverPacketListener(this));
+		server.addListener("/dragshare/receiver/finish", new ReceiverFinishPacketListener(this));
 		server.startListening();
 	}
 
@@ -47,7 +56,7 @@ public class DragShareServer {
 		InputStream input;
 		Properties prop = new Properties();
 
-		input = getClass().getClassLoader().getResourceAsStream("kr/dragshare/config.properties");
+		input = getClass().getClassLoader().getResourceAsStream("kr/dragshare/server/config.properties");
 		
 		if(input == null)
 			System.err.println("error: can not load a property file");
