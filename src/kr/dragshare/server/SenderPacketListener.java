@@ -33,7 +33,7 @@ public class SenderPacketListener implements OSCListener {
 		SenderDB sender = new SenderDB();
 		sender.sender = (String)arguments[0];
 
-		// Date Ã³¸®
+		// Date ï¿½ï¿½ï¿½ï¿½
 		//---------------------------
 		try {
 			String timeString = (String)arguments[1];
@@ -44,9 +44,11 @@ public class SenderPacketListener implements OSCListener {
 			e.printStackTrace();
 		}
 		
-		// ÀúÀå
+		// ï¿½ï¿½ï¿½ï¿½
 		//-----------------------------
 		dragShareServer.db.storeSender(sender);
+		
+		System.out.println(sender.sender);
 	}
 
 }
