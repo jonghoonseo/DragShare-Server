@@ -1,6 +1,5 @@
 package kr.dragshare.server;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Vector;
 
@@ -9,6 +8,12 @@ class SenderDB {
 	String sender;			// identifier
 	Date time;
 	// location etc
+	
+	public String toString() {
+		return "index: " + dbIdx + "\n"
+				+ "sender: " + sender + "\n"
+				+ "time: " + time + "\n";
+	}
 }
 
 class ReceiverDB {
@@ -16,6 +21,12 @@ class ReceiverDB {
 	String receiver;		// identifier
 	Date time;
 	// location etc
+
+	public String toString() {
+		return "index: " + dbIdx + "\n"
+				+ "receiver : " + receiver + "\n"
+				+ "time: " + time + "\n";
+	}
 }
 
 public class FakeDB {
