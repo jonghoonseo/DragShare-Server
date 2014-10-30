@@ -8,8 +8,6 @@ import java.io.InputStream;
 import java.net.SocketException;
 import java.util.Properties;
 
-import com.illposed.osc.OSCListener;
-import com.illposed.osc.OSCMessage;
 import com.illposed.osc.OSCPortIn;
 
 /**
@@ -41,9 +39,9 @@ public class DragShareServer {
 	private void initializeServer() throws SocketException {
 		server = new OSCPortIn(port);
 		
-		server.addListener("/dragshare/sender", new SenderPacketListener(this));
-		server.addListener("/dragshare/receiver", new ReceiverPacketListener(this));
-		server.addListener("/dragshare/receiver/finish", new ReceiverFinishPacketListener(this));
+		server.addListener(OSCPacketAddresses.OSC_SENDER_ID_PACKET, new SenderPacketListener(this));
+		server.addListener(OSCPacketAddresses.OSC_RECEIVER_ID_PACKET, new ReceiverPacketListener(this));
+		server.addListener(OSCPacketAddresses.OSC_RECEIVER_FINISH_PACKET, new ReceiverFinishPacketListener(this));
 		server.startListening();
 	}
 

@@ -48,7 +48,7 @@ public class SenderPacketListener implements OSCListener {
 		//-----------------------------
 		dragShareServer.db.storeSender(sender);
 		
-		System.out.println(sender.sender);
+		System.out.println(sender);
 	}
 
 }

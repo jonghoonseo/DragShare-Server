@@ -51,6 +51,8 @@ public class ReceiverPacketListener implements OSCListener {
 		//-----------------------------
 		dragShareServer.db.storeReceiver(receiver);
 		
+		System.out.println(receiver);
+		
 		
 		// 4. FTP 다운받도록 SenderID 내려주기
 		sendFtpInfor(receiver);
