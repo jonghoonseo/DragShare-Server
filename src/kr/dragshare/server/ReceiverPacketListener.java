@@ -3,6 +3,10 @@
  */
 package kr.dragshare.server;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,36 +35,53 @@ public class ReceiverPacketListener implements OSCListener {
 	 */
 	@Override
 	public void acceptMessage(Date time, OSCMessage message) {
+		System.out.println("Received");
+		
+		
 		Object[] arguments = message.getArguments();
 		
 		ReceiverDB receiver = new ReceiverDB();
 		receiver.receiver = (String)arguments[0];
 
-		// Date Ã³¸®
+		// Date ï¿½ï¿½ï¿½ï¿½
 		//---------------------------
 		try {
 			String timeString = (String)arguments[1];
 			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss:SSS");
 			receiver.time = df.parse(timeString);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		// ÀúÀå
+		// ï¿½ï¿½ï¿½ï¿½
 		//-----------------------------
 		dragShareServer.db.storeReceiver(receiver);
 		
 		System.out.println(receiver);
 		
 		
-		// 4. FTP ´Ù¿î¹Þµµ·Ï SenderID ³»·ÁÁÖ±â
+		// 4. FTP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ SenderID ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		sendFtpInfor(receiver);
 	}
 
 	
 	private void sendFtpInfor(ReceiverDB receiver) {
-		// TODO 4. FTP ´Ù¿î¹Þµµ·Ï SenderID ³»·ÁÁÖ±â
+		System.out.println("Sending to " + receiver.receiver);
+		
+		try {
+			OSCPortOut osc = new OSCPortOut(InetAddress.getByName(receiver.receiver),  9097);
+			OSCMessage msg = new OSCMessage(OSCPacketAddresses.OSC_SERVER_PATH_PACKET, new Object[] {dragShareServer.db.senders.lastElement().sender});
+			System.out.println("Receive from "+ dragShareServer.db.senders.lastElement().sender);
+			osc.send(msg);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 

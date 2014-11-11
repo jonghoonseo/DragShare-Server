@@ -12,7 +12,7 @@ import com.illposed.osc.OSCListener;
 import com.illposed.osc.OSCMessage;
 
 /**
- * Receiver¿¡¼­ Á¾·á ¸Þ½ÃÁö ¿À´Â°É Ã³¸®ÇÏ´Â °´Ã¼
+ * Receiverï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
  * 
  * @author Jonghoon Seo
  *
@@ -30,16 +30,16 @@ public class ReceiverFinishPacketListener implements OSCListener {
 	 */
 	@Override
 	public void acceptMessage(Date time, OSCMessage message) {
-		String senderID = (String)message.getArguments()[0];
+//		String senderID = (String)message.getArguments()[0];
 		
-		System.out.println(senderID + "will be deleted.");
+//		System.out.println(senderID + "will be deleted.");
 		
-		// 5. ´Ù ³¡³µÀ¸¸é µð·ºÅä¸® Á¦°Å
-		deleteFtpDirectory(senderID);
+		// 5. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+//		deleteFtpDirectory(senderID);
 	}
 
 	private void deleteFtpDirectory(String senderID) {
-		// TODO 5. ´Ù ³¡³µÀ¸¸é µð·ºÅä¸® Á¦°Å
+		// TODO 5. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 	}
 
