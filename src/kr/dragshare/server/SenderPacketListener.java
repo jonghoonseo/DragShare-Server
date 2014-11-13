@@ -35,14 +35,7 @@ public class SenderPacketListener implements OSCListener {
 
 		// Date ����
 		//---------------------------
-		try {
-			String timeString = (String)arguments[1];
-			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss:SSS");
-			sender.time = df.parse(timeString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sender.time = null;
 		
 		// ����
 		//-----------------------------
