@@ -43,7 +43,7 @@ public class ReceiverPacketListener implements OSCListener {
 		ReceiverDB receiver = new ReceiverDB();
 		receiver.receiver = (String)arguments[0];
 
-		// Date ����
+		// Date 파싱
 		//---------------------------
 		try {
 			String timeString = (String)arguments[1];
@@ -53,25 +53,32 @@ public class ReceiverPacketListener implements OSCListener {
 			e.printStackTrace();
 		}
 		
-		// ����
+		// 저장
 		//-----------------------------
 		dragShareServer.db.storeReceiver(receiver);
 		
 		System.out.println(receiver);
 		
 		
-		// 4. FTP ���������� SenderID ��������
-		sendFtpInfor(receiver);
+		// 4. 전송받을 UUID 전송
+		sendFileInfor(receiver);
 	}
 
 	
-	private void sendFtpInfor(ReceiverDB receiver) {
+	private void sendFileInfor(ReceiverDB receiver) {
 		System.out.println("Sending to " + receiver.receiver);
 		
 		try {
 			OSCPortOut osc = new OSCPortOut(InetAddress.getByName(receiver.receiver),  9097);
-			OSCMessage msg = new OSCMessage(OSCPacketAddresses.OSC_SERVER_PATH_PACKET, new Object[] {dragShareServer.db.senders.lastElement().sender});
-			System.out.println("Receive from "+ dragShareServer.db.senders.lastElement().sender);
+			SenderDB sender = dragShareServer.db.senders.lastElement();
+			Object[] arguments = new Object[sender.uuidStrings.size()];
+			
+			for(int i=0; i<arguments.length; ++i){
+				arguments[i] = sender.uuidStrings.get(i);
+			}
+			
+			OSCMessage msg = new OSCMessage(OSCPacketAddresses.OSC_SERVER_PATH_PACKET, arguments);
+			System.out.println("to Receiver: " + sender);
 			osc.send(msg);
 		} catch (SocketException e) {
 			e.printStackTrace();
@@ -81,8 +88,6 @@ public class ReceiverPacketListener implements OSCListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 }

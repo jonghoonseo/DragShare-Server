@@ -1,18 +1,24 @@
 package kr.dragshare.server;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
 class SenderDB {
 	int dbIdx;
-	String sender;			// identifier
+	ArrayList<String>	uuidStrings = new ArrayList<String>();
 	Date time;
+	
 	// location etc
 	
 	public String toString() {
-		return "index: " + dbIdx + "\n"
-				+ "sender: " + sender + "\n"
-				+ "time: " + time + "\n";
+		StringBuffer str;
+		
+		str = new StringBuffer("Total: " + uuidStrings.size() + " ids\n");
+		for(String uuidString : uuidStrings)
+			str.append(uuidString + "\n");
+		
+		return str.toString();
 	}
 }
 

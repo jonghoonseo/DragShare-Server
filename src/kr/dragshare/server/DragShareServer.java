@@ -29,18 +29,21 @@ public class DragShareServer {
 		getServerConfiguration();
 		
 		initializeServer();
+		
+		System.out.println("DragShare server is opened");
 	}
 	
 	public void finalize() {
-		System.out.println("서버 종료");
+		System.out.println("DragShare server is closed");
 	}
 
 
 	private void initializeServer() throws SocketException {
+		System.out.println("DragShare server: " + port + " port is opening");
 		server = new OSCPortIn(port);
 		
-		server.addListener(OSCPacketAddresses.OSC_SENDER_ID_PACKET, new SenderPacketListener(this));
-		server.addListener(OSCPacketAddresses.OSC_RECEIVER_ID_PACKET, new ReceiverPacketListener(this));
+		server.addListener(OSCPacketAddresses.OSC_SENDER_ID_PACKET, 	new SenderPacketListener(this));
+		server.addListener(OSCPacketAddresses.OSC_RECEIVER_ID_PACKET, 	new ReceiverPacketListener(this));
 		server.addListener(OSCPacketAddresses.OSC_RECEIVER_FINISH_PACKET, new ReceiverFinishPacketListener(this));
 		server.startListening();
 	}
@@ -56,8 +59,10 @@ public class DragShareServer {
 
 		input = getClass().getClassLoader().getResourceAsStream("kr/dragshare/server/config.properties");
 		
-		if(input == null)
+		if(input == null) {
 			System.err.println("error: can not load a property file");
+			System.exit(-1);
+		}
 		
 		// load a properties file
 		prop.load(input);

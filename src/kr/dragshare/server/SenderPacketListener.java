@@ -31,13 +31,12 @@ public class SenderPacketListener implements OSCListener {
 		Object[] arguments = message.getArguments();
 		
 		SenderDB sender = new SenderDB();
-		sender.sender = (String)arguments[0];
-
-		// Date ����
-		//---------------------------
-		sender.time = null;
+		for(Object arg : arguments) {
+			String str = (String)arg;
+			sender.uuidStrings.add(str);
+		}
 		
-		// ����
+		// 저장
 		//-----------------------------
 		dragShareServer.db.storeSender(sender);
 		
